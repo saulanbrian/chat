@@ -11,3 +11,5 @@ class ChatListCreateView(ListCreateAPIView):
   serializer_class = ChatSerializer
   
 
+def room(request):
+  return render(request,'chat/index.html')

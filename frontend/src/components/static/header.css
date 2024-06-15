@@ -1,0 +1,21 @@
+header div a{
+  text-decoration: none;
+  color:inherit;
+}
+
+header div button{
+  color:inherit !important;
+}
+
+.menu-item{
+  margin-top:10px !important;
+}
+
+body{
+  margin:0;
+  padding:0;
+}
+
+header{
+  box-shadow:none !important;
+}

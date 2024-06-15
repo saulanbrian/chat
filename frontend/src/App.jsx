@@ -3,15 +3,36 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 
 import Login, { LoginAction } from './pages/login.jsx'
+import Home from './pages/home.jsx'
+import ConversationPage from './pages/conversation.jsx'
 
 import { UserContextProvider } from './context/usercontext.jsx'
 
 import Private from '../utils/privatewrapper.jsx'
 
+import { createTheme,ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette:{
+    primary:{
+      main:'#ec407a'
+    },
+    secondary:{
+      main:'#039be5'
+    }
+  }
+})
+
 const router = createBrowserRouter([  
     {
-      path:'',
-      element:<Private><h1>home</h1></Private>
+      path:'/',
+      element:<Private><Home /></Private>,
+      children:[
+      {   
+        path:':convoId',
+        element:<ConversationPage />
+      },
+      ]
     },
     {
       path:'login',
@@ -22,7 +43,9 @@ const router = createBrowserRouter([
 
 export default function App(){
   
-  return <UserContextProvider>
+  return <ThemeProvider theme={theme}>
+  <UserContextProvider>
     <RouterProvider router={router} />
   </UserContextProvider>
+  </ThemeProvider>
 }
