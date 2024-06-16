@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect,useMemo } from 'react'
 
 import Header from '../components/header.jsx'
 import { Typography,Paper } from '@mui/material'
@@ -12,10 +12,17 @@ const styles = {
 }
 
 function ConversationPage(){
-  const path = 'ws://127.0.0.1:8000/ws/chat'
+  const token = localStorage.getItem('ACCESS_TOKEN')
+  const path = `ws://127.0.0.1:8000/ws/chat?token=${token}`
   
   useEffect(() => {
     const socket = new WebSocket(path)
+    
+    socket.onmessage = (e) => {
+      const event = JSON.parse(e.data)
+      console.log(event.message)
+    }
+    
   },[])
 
   return <Paper sx={styles.paper}>
