@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       children:[
       {   
         path:':convoId',
-        element:<ConversationPage />
+        element:<ConversationPage />,
       },
       ]
     },

@@ -1,6 +1,7 @@
 import { useEffect,useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { useGetConversations } from '../queries/conversations.jsx'
+import { useGetMessages } from '../queries/messages.jsx'
+import { useQueryClient } from '@tanstack/react-query'
 
 import Header from '../components/header.jsx'
 import { 
@@ -22,11 +23,13 @@ const styles = {
 }
 
 function ConversationPage(){
+
   const token = localStorage.getItem('ACCESS_TOKEN')
   const path = `ws://127.0.0.1:8000/ws/chat?token=${token}`
   
   const { convoId } = useParams()
-  const { data,isLoading,isError } = useGetConversations()
+  const { data,isLoading,isError } = useGetMessages(convoId)
+
   
   useEffect(() => {
     if(data){
@@ -41,9 +44,8 @@ function ConversationPage(){
 
   return <Paper sx={styles.paper}>
   { isLoading? <CircularProgress/>
-  :data.map((data) => {
-    console.log(data)
-    return <h1 key={data.id}>fummy</h1>
+  :data.map((message) => {
+    return <h1 key={message.id}>{message.message}</h1>
   }) }
   </Paper>
 

@@ -1,10 +1,13 @@
 import { Box, Paper,List, ListItem,ListItemButton,ListItemAvatar,ListItemText,Avatar,Divider} from "@mui/material"
 
-import { useLocation,useNavigate } from 'react-router-dom'
+import { useLocation,useNavigate,redirect } from 'react-router-dom'
 import { useState } from 'react'
 import { useGetConversations } from '../queries/conversations.jsx'
+import { useQueryClient } from '@tanstack/react-query'
 
 function ConversationDrawer(){
+  
+  const queryClient = useQueryClient()
   
   const conversationsData = useGetConversations()
   const [selectedConvo,setSelectedConvo] = useState(null)
