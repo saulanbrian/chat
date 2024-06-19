@@ -3,10 +3,10 @@ import ConversationDrawer from '../components/conversation-list.jsx'
 import WelcomeCard from '../components/welcomecard.jsx'
 
 import { Box,Paper, } from '@mui/material'
-
 import { Outlet } from 'react-router-dom'
-
 import { useLocation } from 'react-router-dom'
+
+import { useQueryClient } from '@tanstack/react-query'
 
 const styles = {
   box:{

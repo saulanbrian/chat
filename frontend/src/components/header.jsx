@@ -13,7 +13,8 @@ import {
   ListItem,
   ListItemText,
   Drawer,
-  Divider
+  Divider,
+  Avatar
 } from '@mui/material'
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -23,14 +24,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcCallIcon from '@mui/icons-material/AddIcCall';
 
 import { useNavigate } from 'react-router-dom'
+import { useUserContext } from '../context/usercontext.jsx'
 
 import './static/header.css'
 
 import { useState } from 'react'
 
-function CustomComponent(){
-  return <h1>this is custom</h1>
-}
 
 export default function Header(){
   const [anchorEl,setAnchorEl] = useState(null)
@@ -39,6 +38,10 @@ export default function Header(){
   const [drawerOpen,setDrawerOpen] = useState(false)
   
   const navigate = useNavigate()
+  
+  const { user } = useUserContext()
+  
+  console.log(user.profile)
   
   function toggleDrawer(){
     setDrawerOpen(false)
@@ -56,7 +59,7 @@ export default function Header(){
     setAnchorEl(e.target)
   }
   
-  return <AppBar color='primary' sx={{position:'sticky'}}>
+  return <AppBar color='primary' sx={{position:'sticky',padding:'0 10px'}}>
   <Toolbar disableGutters>
     <Box sx={{display:{sm:'block',md:'none'}}}>
       <IconButton onClick={openDrawer}>
@@ -66,9 +69,8 @@ export default function Header(){
     <Typography 
       component='a' 
       href='#' 
-      variant='6'
       sx={{flexGrow:1}}>
-      ChatApp
+    CHATAPP
     </Typography>
     <Box sx={{display:{xs:'none',md:'block'}}}>
       <Button>about</Button>
@@ -80,7 +82,9 @@ export default function Header(){
       <Button focusRipple>home</Button>
     </Box>
     <Box sx={{display:{xs:'none',md:'block'}}}>
-      <Button onClick={openMenu}>you</Button>
+    <Box onClick={openMenu}>
+        <Avatar srcSet={`http://127.0.0.1:8000${user.profile}`} sx={{width:30,height:30}}/>
+    </Box>
     </Box>
     <Menu open={menuState} 
           anchorEl={anchorEl} 

@@ -9,6 +9,7 @@ const refreshToken = async(token) => {
   
   try{
     const res = await axios.post('http://127.0.0.1:8000/auth/token/refresh/',{refresh:token})
+    localStorage.setItem('ACCESS_TOKEN',res.data.access)
     return res.data.access
   }catch(e){
     console.log(e.response.data)
@@ -20,13 +21,13 @@ const refreshToken = async(token) => {
 api.interceptors.request.use(async(config) => {
     
   const access = localStorage.getItem('ACCESS_TOKEN')
-  console.log(config)
+  const refresh = localStorage.getItem('REFRESH_TOKEN')
     
   if(access){
     let latestToken = access
     const decoded = jwtDecode(access)
     if(decoded.exp < Date.now() / 1000){
-      latestToken = await refreshToken(latestToken)
+      latestToken = await refreshToken(refresh)
     }
     config.headers.Authorization = `Bearer ${latestToken}`
   }

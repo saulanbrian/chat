@@ -19,7 +19,7 @@ export const UserContextProvider = ({children}) => {
     if (refreshToken) {
       const decoded = jwtDecode(refreshToken)
       if (decoded.exp > Date.now() / 1000){
-        setUser({username:decoded.username})
+        setUser({username:decoded.username,profile:decoded.profile})
         setIsAuthenticated(true)
       }
       else localStorage.clear()
@@ -32,7 +32,7 @@ export const UserContextProvider = ({children}) => {
     localStorage.setItem('ACCESS_TOKEN',data.access)
     localStorage.setItem('REFRESH_TOKEN',data.refresh)
     const decoded = jwtDecode(data.access)
-    setUser({username:decoded.username})
+    setUser({username:decoded.username,profile:decoded.profile})
     setIsAuthenticated(true)
     setIsLoading(false)
   }

@@ -6,7 +6,7 @@ from channels.db import database_sync_to_async
 from rest_framework_simplejwt.tokens import UntypedToken
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 
-from django.contrib.auth.models import User
+from user.models import CustomUser
 
 class JwtAuthMiddleware(BaseMiddleware):
   async def __call__(self,scope,receive,send):
@@ -20,11 +20,11 @@ class JwtAuthMiddleware(BaseMiddleware):
         #we're using this to validate token
         decoded_token = UntypedToken(token[0]).payload
         user_id = decoded_token['user_id']
-        user = await database_sync_to_async(User.objects.get)(id=user_id)
+        user = await database_sync_to_async(CustomUser.objects.get)(id=user_id)
         
         scope['user'] = user
         
-      except(TokenError,InvalidToken,User.DoesNotExist) as e:
+      except(TokenError,InvalidToken,CustomUser.DoesNotExist) as e:
         print(e)
         scope['user'] = None
     else:
