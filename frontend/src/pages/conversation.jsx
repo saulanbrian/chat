@@ -11,43 +11,75 @@ import {
   List,
   ListItem,
   ListItemText,
+  Box
 } from '@mui/material'
+import { SentMessage, ReceivedMessage } from '../components/message.jsx'
 
 const styles = {
-  paper:{
+  box:{
     flexGrow:1,
-    padding:'5px',
-    minWidth:'65vw',
-    minHeight:'80vh',
+    paddingTop:'20px'
   }
 }
 
 function ConversationPage(){
-
-  const token = localStorage.getItem('ACCESS_TOKEN')
-  const path = `ws://127.0.0.1:8000/ws/chat?token=${token}`
+  
+  const queryClient = useQueryClient()
   
   const { convoId } = useParams()
   const { data,isLoading,isError } = useGetMessages(convoId)
-
   
+  const token = localStorage.getItem('ACCESS_TOKEN')
+  const path = `ws://127.0.0.1:8000/ws/conversation/${convoId}/?token=${token}`
+  
+  let socket = undefined
+
   useEffect(() => {
     if(data){
-      const socket = new WebSocket(path)
+      
+      socket = new WebSocket(path)
+      
+      socket.onopen = () => {
+        console.log('connection established')
+      }
       
       socket.onmessage = (e) => {
-        const event = JSON.parse(e.data)
-        console.log(event.message)
+        const data = JSON.parse(e.data)
+        console.log(data)
+        queryClient.invalidateQueries(['message',convoId])
       }
     }
   },[data])
+  
+  function handleClick(e){
+    const message = document.getElementById('message')
+    socket.send(JSON.stringify({
+      'message':message.value
+    }))
+  }
 
-  return <Paper sx={styles.paper}>
-  { isLoading? <CircularProgress/>
-  :data.map((message) => {
-    return <h1 key={message.id}>{message.message}</h1>
-  }) }
-  </Paper>
+  return (
+    <Box sx={styles.box}>
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        data.messages.map((message) => (
+          message.sent_by_user ? (
+            <SentMessage key={message.id} 
+                         message={message}
+                         />
+          ) : (
+            <ReceivedMessage 
+              key={message.id} 
+              message={message}
+              profile={data.conversation_with.profile}/>
+          )
+        ))
+      )}
+      <input id='message' style={{marginTop:'auto'}} />
+      <button onClick={handleClick}>send</button>
+    </Box>
+  );
 
 }
 

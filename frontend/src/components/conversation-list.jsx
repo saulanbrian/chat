@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { useGetConversations } from '../queries/conversations.jsx'
 import { useQueryClient } from '@tanstack/react-query'
 
+import './static/conversation-drawer.css'
+
 function ConversationDrawer(){
   
   const queryClient = useQueryClient()
@@ -19,13 +21,14 @@ function ConversationDrawer(){
   
   const styles = {
     paper:{
-      // maxWidth:'35vw',
+      minWidth:'40vw',
       flexGrow:1,
       display:{
         xs: location.pathname === '/' ? 'block': 'none',
         md: 'block'
       },
-      minHeight:'80vh',
+      height:'83vh',
+      maxHeight:'83vh',
       padding:0
     }
   }  
@@ -35,7 +38,7 @@ function ConversationDrawer(){
     navigate(convoId)
   }
   
-  return <Paper sx={styles.paper}>
+  return <Paper sx={styles.paper} id='conversation-container'>
   {
     conversationsData.isLoading?<h1>loading...</h1>:
     <List>
@@ -45,7 +48,8 @@ function ConversationDrawer(){
       const message = convo.latest_message.message
       return <ListItem key={convo.id} 
                 alignItems='flex-start' 
-                sx={{padding:0}}>
+                sx={{padding:0}}
+                divider={true}>
       <ListItemButton selected={selectedConvo === convo.id} 
                       onClick={e => handleSelect(e,convo.id)}>
         <ListItemAvatar>

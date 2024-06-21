@@ -59,7 +59,9 @@ export default function Header(){
     setAnchorEl(e.target)
   }
   
-  return <AppBar color='primary' sx={{position:'sticky',padding:'0 10px'}}>
+  return <AppBar color='primary' 
+                 sx={{position:'sticky',padding:'0 10px'}}
+                 id='header'>
   <Toolbar disableGutters>
     <Box sx={{display:{sm:'block',md:'none'}}}>
       <IconButton onClick={openDrawer}>

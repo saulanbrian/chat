@@ -6,10 +6,12 @@ export const useGetMessages = (convoId) => {
   return useQuery({
     queryKey:['messages',convoId],
     queryFn:async() => {
-      const res = await api.get(`conversations/${convoId}/messages/`,{exclude_user:true})
+      const res = await api.get(`conversations/${convoId}/`,{
+        params:{exclude_user:true}
+      })
       return res.data
     },
-    staleTime:5000,
-    cacheTime:5000
+    staleTime:50000,
+    cacheTime:50000
   })
 }

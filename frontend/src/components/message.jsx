@@ -3,17 +3,41 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText
+} from '@mui/material'
+
+const styles = {
+  sent:{
+    borderRadius:5,
+    background:'#fa2c83',
+    width:'fit-content',
+    maxWidth:'70%',
+    marginLeft:'auto',
+    marginRight:'5px'
+  },
+  received:{
+    borderRadius:5,
+    width:'fit-content',
+    maxWidth:'70%',
+    marginRight:'auto'
+  }
 }
 
-export const SentMessage = ({message}) => {
-  return <ListItem>
+export const ReceivedMessage = ({message,profile}) => {
+  console.log(`profile: ${profile}`)
+  return <ListItem sx={styles.received}>
   <ListItemAvatar>
-    <Avatar srcSet={message.sender.profile} />
+    <Avatar srcSet={`http://127.0.0.1:8000${profile}`} />
   </ListItemAvatar>
-  <ListItemText primary={message.message} />
+  <ListItemText sx={{'color':'inherit'}}>
+    {message.message}
+  </ListItemText>
   </ListItem>
 }
 
-export const ReceivedMessage = ({message}) => {
-  
+export const SentMessage = ({message}) => {
+  return <ListItem sx={styles.sent}>
+  <ListItemText sx={{'color':'white'}}>
+    {message.message}
+  </ListItemText>
+  </ListItem>
 }

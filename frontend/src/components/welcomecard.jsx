@@ -8,7 +8,7 @@ const styles = {
       xs: location === '/'? "none": "flex",
       md:"flex"
     },
-    minWidth:'65vw',
+    // minWidth:'65vw',
     alignItems:'center',
     justifyContent:'center',
     flexGrow:1
