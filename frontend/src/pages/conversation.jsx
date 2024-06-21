@@ -29,27 +29,27 @@ function ConversationPage(){
   const { convoId } = useParams()
   const { data,isLoading,isError } = useGetMessages(convoId)
   
+  if(data) console.log(data)
+  
   const token = localStorage.getItem('ACCESS_TOKEN')
   const path = `ws://127.0.0.1:8000/ws/conversation/${convoId}/?token=${token}`
   
-  let socket = undefined
-
-  useEffect(() => {
-    if(data){
       
-      socket = new WebSocket(path)
+  const socket = useMemo(() => {
+    return new WebSocket(path)
+  },[])
       
-      socket.onopen = () => {
-        console.log('connection established')
-      }
+  socket.onopen = () => {
+    console.log('connection established')
+  }
       
-      socket.onmessage = (e) => {
-        const data = JSON.parse(e.data)
-        console.log(data)
-        queryClient.invalidateQueries(['message',convoId])
-      }
-    }
-  },[data])
+  socket.onmessage = (e) => {
+    const data = JSON.parse(e.data)
+    queryClient.setQueryData(['messages',convoId],(prev) => ({
+      ...prev,
+      messages:[...prev.messages,data]
+    }))
+  }
   
   function handleClick(e){
     const message = document.getElementById('message')

@@ -7,10 +7,12 @@ from chat.models import Chat
 from .models import Conversation
 from user.models import CustomUser
 
+
 @database_sync_to_async
 def add_message(conversation,message,user):
   new_message = Chat.objects.create(message=message,sender=user)
   conversation.messages.add(new_message)
+  return new_message
   
 @database_sync_to_async
 def get_conversation(conversation_id):
@@ -40,7 +42,7 @@ class ConversationConsumer(AsyncWebsocketConsumer):
     data = json.loads(text_data)
     message = data['message']
     
-    await add_message(
+    created = await add_message(
       conversation=self.conversation,
       message=message,
       user=self.user)
@@ -49,12 +51,18 @@ class ConversationConsumer(AsyncWebsocketConsumer):
       self.group_name,
       {
         'type':'send.message',
-        'message':message
+        'message':created.message,
+        'id':str(created.id),
+        'sender_id':self.user.id
       }
     )
     
   async def send_message(self,event):
     message = event['message']
+    id_ = event['id']
+    sender_id = event['sender_id']
     await self.send(json.dumps({
-      'message':message
+      'id':id_,
+      'message':message,
+      'sent_by_user':self.user.id == sender_id
     }))
