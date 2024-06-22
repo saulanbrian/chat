@@ -1,4 +1,4 @@
-import { useEffect,useMemo } from 'react'
+import { useEffect,useMemo,useState,useRef} from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetMessages } from '../queries/messages.jsx'
 import { useQueryClient } from '@tanstack/react-query'
@@ -11,14 +11,34 @@ import {
   List,
   ListItem,
   ListItemText,
-  Box
+  ListItemButton,
+  Box,
+  TextField,
+  TextareaAutosize,
+  Button
 } from '@mui/material'
+
+import AutoScrollBox  from '../components/autoscrollbox.jsx'
+
 import { SentMessage, ReceivedMessage } from '../components/message.jsx'
 
 const styles = {
   box:{
     flexGrow:1,
-    paddingTop:'20px'
+    paddingTop:'20px',
+    minHeight:'85vh',
+    maxHeight:'85vh',
+    overflow:'auto',
+    display:'flex',
+    flexDirection:'column'
+  },
+  messageInput:{
+    position:'sticky',
+    bottom:0,
+    display:'flex',
+    backgroundColor:'white',
+    justifyContent:'center',
+    marginTop:'auto'
   }
 }
 
@@ -38,6 +58,8 @@ function ConversationPage(){
   const socket = useMemo(() => {
     return new WebSocket(path)
   },[])
+
+  const messageRef = useRef(undefined)
       
   socket.onopen = () => {
     console.log('connection established')
@@ -46,20 +68,28 @@ function ConversationPage(){
   socket.onmessage = (e) => {
     const data = JSON.parse(e.data)
     queryClient.setQueryData(['messages',convoId],(prev) => ({
-      ...prev,
+      ...prev,  
       messages:[...prev.messages,data]
     }))
   }
   
   function handleClick(e){
-    const message = document.getElementById('message')
+    const message = messageRef.current.value 
+    messageRef.current.value = ''
     socket.send(JSON.stringify({
-      'message':message.value
+      'message':message
     }))
   }
 
+
+  function handleKeyDown(e){
+    if (e.key == 'Enter'){
+      handleClick(e)
+    } 
+  }
+
   return (
-    <Box sx={styles.box}>
+    <AutoScrollBox sx={styles.box}>
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -76,9 +106,17 @@ function ConversationPage(){
           )
         ))
       )}
-      <input id='message' style={{marginTop:'auto'}} />
-      <button onClick={handleClick}>send</button>
-    </Box>
+      {
+        data && <ListItem sx={styles.messageInput} component='div'>
+        <TextField inputRef={messageRef} 
+                   variant='outlined' 
+                   label='message' 
+                   sx={{flexGrow:1}}
+                   onKeyDown={handleKeyDown} />
+        <Button onClick={handleClick}>Send</Button>
+      </ListItem>
+      }
+    </AutoScrollBox>
   );
 
 }

@@ -21,7 +21,7 @@ class ConversationSerializer(serializers.ModelSerializer):
       return UserSerializer(other_party).data
 
   def get_latest_message(self,obj):
-    message = obj.messages.last()
+    message = obj.messages.all().order_by('-date_sent').first()
     return ChatSerializer(message).data
     
 

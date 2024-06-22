@@ -27,8 +27,8 @@ function ConversationDrawer(){
         xs: location.pathname === '/' ? 'block': 'none',
         md: 'block'
       },
-      height:'83vh',
-      maxHeight:'83vh',
+      minHeight:'85vh',
+      maxHeight:'85vh',
       padding:0
     }
   }  
@@ -38,7 +38,7 @@ function ConversationDrawer(){
     navigate(convoId)
   }
   
-  return <Paper sx={styles.paper} id='conversation-container'>
+  return <Box sx={styles.paper} id='conversation-container'>
   {
     conversationsData.isLoading?<h1>loading...</h1>:
     <List>
@@ -62,7 +62,7 @@ function ConversationDrawer(){
     })}
     </List>
   }
-  </Paper>
+  </Box>
 }
 
 export default ConversationDrawer;

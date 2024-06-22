@@ -12,13 +12,15 @@ const styles = {
     width:'fit-content',
     maxWidth:'70%',
     marginLeft:'auto',
-    marginRight:'5px'
+    marginRight:'5px',
+    marginBottom:'3px',
   },
   received:{
     borderRadius:5,
     width:'fit-content',
     maxWidth:'70%',
-    marginRight:'auto'
+    marginRight:'auto',
+    marginBottom:'3px',
   }
 }
 
