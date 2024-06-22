@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'channels_redis',
     'rest_framework_simplejwt',
     'user.apps.UserConfig',
-    'chat',
+    'chat.apps.ChatConfig',
     'conversation',
 ]
 
