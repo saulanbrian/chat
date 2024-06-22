@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login, { LoginAction } from './pages/login.jsx'
 import Home from './pages/home.jsx'
 import ConversationPage from './pages/conversation.jsx'
+import Logout from './pages/logout.js'
 
 import { UserContextProvider } from './context/usercontext.jsx'
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       element:<Login />,
       action:LoginAction,
     },
+    {
+      path:'logout',
+      element:<Logout />
+    }
   ])
 
 

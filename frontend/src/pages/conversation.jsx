@@ -49,11 +49,10 @@ function ConversationPage(){
   const { convoId } = useParams()
   const { data,isLoading,isError } = useGetMessages(convoId)
   
-  if(data) console.log(data)
-  
   const token = localStorage.getItem('ACCESS_TOKEN')
   const path = `ws://127.0.0.1:8000/ws/conversation/${convoId}/?token=${token}`
-  
+
+  const [connectedToSocket,setConnectedToSocket] = useState(false)
       
   const socket = useMemo(() => {
     return new WebSocket(path)
@@ -63,6 +62,11 @@ function ConversationPage(){
       
   socket.onopen = () => {
     console.log('connection established')
+    setConnectedToSocket(true)
+  }
+
+  socket.onclose = () => {
+    setConnectedToSocket(false)
   }
       
   socket.onmessage = (e) => {
@@ -74,9 +78,9 @@ function ConversationPage(){
   }
   
   function handleClick(e){
-    const message = messageRef.current.value 
+    const message = messageRef.current.value.trim()
     messageRef.current.value = ''
-    socket.send(JSON.stringify({
+    message && socket.send(JSON.stringify({
       'message':message
     }))
   }
@@ -113,7 +117,9 @@ function ConversationPage(){
                    label='message' 
                    sx={{flexGrow:1}}
                    onKeyDown={handleKeyDown} />
-        <Button onClick={handleClick}>Send</Button>
+        <Button onClick={handleClick} disabled={Boolean(!connectedToSocket)}>
+          Send
+        </Button>
       </ListItem>
       }
     </AutoScrollBox>

@@ -92,7 +92,8 @@ export default function Header(){
           anchorEl={anchorEl} 
           onClose={closeMenu}>
       <MenuItem component={Button} 
-                startIcon={<LogoutIcon/>} >
+                startIcon={<LogoutIcon/>}
+                onClick={() => navigate('logout')} >
                 logout
       </MenuItem>
     </Menu>
@@ -127,7 +128,7 @@ export default function Header(){
         </ListItem>
         <Divider />
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => navigate('logout')}>
             <ListItemIcon>
               <LogoutIcon color='error' />
             </ListItemIcon>
