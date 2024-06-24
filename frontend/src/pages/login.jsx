@@ -1,4 +1,5 @@
 import AuthForm from '../components/authform.jsx'
+import { Box } from '@mui/material'
 
 import { useActionData, Navigate } from 'react-router-dom'
 import { useUserContext } from '../context/usercontext.jsx'
@@ -7,6 +8,8 @@ import { useEffect } from 'react'
 import api from '../api.jsx'
 
 import { jwtDecode } from 'jwt-decode'
+
+import './static/login.css'
 
 function Login(){
   const data = useActionData()
@@ -18,7 +21,9 @@ function Login(){
   
   if(isAuthenticated) return <Navigate to='/' />
 
-  return <AuthForm userAction={'login'} />
+  return <Box id='main-box'>
+    <AuthForm userAction={'login'} />
+  </Box>
   
   
 }

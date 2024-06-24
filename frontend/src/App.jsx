@@ -5,6 +5,7 @@ import Login, { LoginAction } from './pages/login.jsx'
 import Home from './pages/home.jsx'
 import ConversationPage from './pages/conversation.jsx'
 import Logout from './pages/logout.js'
+import Signup,{SingupAction} from './pages/signup.jsx'
 
 import { UserContextProvider } from './context/usercontext.jsx'
 
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
     {
       path:'logout',
       element:<Logout />
+    },
+    {
+      path:'signup',
+      element:<Signup />,
+      action:SingupAction
     }
   ])
 

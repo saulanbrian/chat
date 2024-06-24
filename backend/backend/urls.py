@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/token/',TokenObtainPairView.as_view()),
     path('auth/token/refresh/',TokenRefreshView.as_view()),
+    path('user/',include('user.urls')),
     path('chat/',include('chat.urls')),
     path('conversations/',include('conversation.urls'))
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

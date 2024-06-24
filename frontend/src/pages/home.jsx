@@ -20,14 +20,21 @@ function Home(){
   
   const location = useLocation()
   
-  return <>
+  return <> 
   <Header />
-  <Box sx={styles.box}>
-    <ConversationDrawer />
+    <Box sx={styles.box}>
     {
-      location.pathname === '/'? <WelcomeCard />: <Outlet />
+      location.pathname === '/'?
+        <>
+          <ConversationDrawer/>
+          <WelcomeCard sx={{display:{xs:'none',md:'flex   '}}}/>
+        </>:
+        <> 
+          <ConversationDrawer sx={{display:{xs:'none',md:'block'}}}/>
+          <Outlet/>
+        </>
     }
-  </Box>
+    </Box>
   </>
 }
 

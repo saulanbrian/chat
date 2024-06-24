@@ -1,0 +1,22 @@
+#form-cotrol form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#form-cotrol{
+    margin-bottom: 10px;
+}
+
+#form-cotrol form button{
+    width: 100% !important;
+}
+
+@media screen and (max-width:900px) {
+    #form-control{
+        width: 100vw !important;
+        background-color: blue;
+    }
+}

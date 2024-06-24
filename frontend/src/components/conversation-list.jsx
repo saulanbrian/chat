@@ -1,13 +1,22 @@
-import { Box, Paper,List, ListItem,ListItemButton,ListItemAvatar,ListItemText,Avatar,Divider} from "@mui/material"
+import { 
+  Box, 
+  Paper,
+  List, 
+  ListItem,
+  ListItemButton,
+  ListItemAvatar,
+  ListItemText,
+  Avatar,
+  Divider} from "@mui/material"
 
-import { useLocation,useNavigate,redirect } from 'react-router-dom'
+import { useLocation,useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useGetConversations } from '../queries/conversations.jsx'
 import { useQueryClient } from '@tanstack/react-query'
 
 import './static/conversation-drawer.css'
 
-function ConversationDrawer(){
+function ConversationDrawer({sx}){
   
   const queryClient = useQueryClient()
   
@@ -23,10 +32,10 @@ function ConversationDrawer(){
     paper:{
       minWidth:'40vw',
       flexGrow:1,
-      display:{
-        xs: location.pathname === '/' ? 'block': 'none',
-        md: 'block'
-      },
+      // display:{
+      //   xs: location.pathname === '/' ? 'block': 'none',
+      //   md: 'block'
+      // },
       minHeight:'85vh',
       maxHeight:'85vh',
       padding:0
@@ -38,7 +47,7 @@ function ConversationDrawer(){
     navigate(convoId)
   }
   
-  return <Box sx={styles.paper} id='conversation-container'>
+  return <Box sx={{...styles.paper,...sx}} id='conversation-container'>
   {
     conversationsData.isLoading?<h1>loading...</h1>:
     <List>
