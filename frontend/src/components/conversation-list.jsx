@@ -7,7 +7,13 @@ import {
   ListItemAvatar,
   ListItemText,
   Avatar,
-  Divider} from "@mui/material"
+  Divider,
+  TextField,
+  Button,
+  IconButton} from "@mui/material"
+
+import SearchBar from "./searchbar.jsx"
+import SearchResults from "./searchresults.jsx"
 
 import { useLocation,useNavigate } from 'react-router-dom'
 import { useState } from 'react'
@@ -15,6 +21,7 @@ import { useGetConversations } from '../queries/conversations.jsx'
 import { useQueryClient } from '@tanstack/react-query'
 
 import './static/conversation-drawer.css'
+
 
 function ConversationDrawer({sx}){
   
@@ -32,10 +39,6 @@ function ConversationDrawer({sx}){
     paper:{
       minWidth:'40vw',
       flexGrow:1,
-      // display:{
-      //   xs: location.pathname === '/' ? 'block': 'none',
-      //   md: 'block'
-      // },
       minHeight:'85vh',
       maxHeight:'85vh',
       padding:0
@@ -51,24 +54,32 @@ function ConversationDrawer({sx}){
   {
     conversationsData.isLoading?<h1>loading...</h1>:
     <List>
-    {conversationsData.data.map(convo => {
-      const user = convo.conversation_with.username
-      const profile = convo.conversation_with.profile
-      const message = convo.latest_message.message
-      return <ListItem key={convo.id} 
-                alignItems='flex-start' 
-                sx={{padding:0}}
-                divider={true}>
-      <ListItemButton selected={selectedConvo === convo.id} 
-                      onClick={e => handleSelect(e,convo.id)}>
-        <ListItemAvatar>
-          <Avatar src={`http://127.0.0.1:8000${profile}`} />
-        </ListItemAvatar>
-        <ListItemText primary={user} 
-                      secondary={message} />
-      </ListItemButton>
-      </ListItem>
-    })}
+      <SearchBar sx={{position:'relative'}}/>
+    {
+      conversationsData.data.map(
+        convo => {
+          const user = convo.conversation_with.username
+          const profile = convo.conversation_with.profile
+          const message = convo.latest_message.message
+
+          return ( 
+          <ListItem key={convo.id} 
+                    alignItems='flex-start' 
+                    sx={{padding:0,borderRadius:'20px'}}
+                    >
+            <ListItemButton selected={selectedConvo === convo.id} 
+                            onClick={e => handleSelect(e,convo.id)}>
+              <ListItemAvatar>
+                <Avatar src={`http://127.0.0.1:8000${profile}`} />
+              </ListItemAvatar>
+              <ListItemText primary={user} 
+                            secondary={message} />
+            </ListItemButton>
+          </ListItem>
+          )
+        }
+      )
+    }
     </List>
   }
   </Box>

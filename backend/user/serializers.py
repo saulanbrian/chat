@@ -27,7 +27,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
   def get_token(cls,user):
     token = super().get_token(user)
     
-    token['profile'] = user.profile.url
+    if user.profile:
+      token['profile'] = user.profile.url
     token['username'] = user.username
     
     return token

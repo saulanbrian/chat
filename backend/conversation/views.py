@@ -23,7 +23,6 @@ class ConversationDataView(RetrieveAPIView):
   permission_classes = [IsAuthenticated]
   
   def get_serializer_context(self):
-    print(self.request.query_params)
     context = super().get_serializer_context()
     context.update({'request':self.request})
     return context
