@@ -33,6 +33,7 @@ class ConversationDataSerializer(serializers.ModelSerializer):
   class Meta:
     model = Conversation
     fields = ('id','conversation_with','messages')
+ 
       
   def get_conversation_with(self,obj):
     request = self.context.get('request',None)
@@ -50,3 +51,9 @@ class ConversationDataSerializer(serializers.ModelSerializer):
       return ChatSerializer(messages,many=True,context={
         'request':request
       }).data
+    
+
+class ConversationCreateSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Conversation
+    fiels = ('users',)

@@ -7,9 +7,33 @@ import {
     ListItemButton
 } from '@mui/material'
 
+import api from '../api'
 
+import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
+ 
 export default function SearchResults({results,sx}){
-    console.log(results)
+
+    const navigate = useNavigate()
+    const queryClient = useQueryClient()
+    const [searchResults,setSearchResults] = useState(results)
+    
+    async function handleClick(id){
+        try{
+            const res = await api.get('conversations/conversation/retrieveId/',{
+                params:{user:id}})
+            const conversationId = res.data.id
+            queryClient.invalidateQueries(['conversations'])
+            setSearchResults(undefined)
+            navigate(conversationId)
+        }catch(e){
+            console.log(e)
+        }
+        
+    }
+
+
     return (
         <List sx={{
             backgroundColor:'white',
@@ -17,9 +41,9 @@ export default function SearchResults({results,sx}){
             borderTop:0,
             ...sx}}>
             {
-                results && results.map(res => {
+                searchResults && searchResults.map(res => {
                   return <ListItem disablePadding={true}>
-                    <ListItemButton sx={{margin:0}}>
+                    <ListItemButton sx={{margin:0}} onClick={e => handleClick(res.id)}>
                         <Typography key={res.username} paragraph={true} color='primary'>{res.username}</Typography>
                     </ListItemButton>
                  </ListItem> 
@@ -30,12 +54,3 @@ export default function SearchResults({results,sx}){
 }
 
 
-
-{/* <List sx={{backgroundColor:'white', ...sx,border:'1px solid rgb(250, 44, 131)',
-        borderTop:0}}>
-        <ListItem>
-            <Typography paragraph={true}color='primary' noWrap={true}>
-                
-             </Typography>
-        </ListItem>
-    </List> */}

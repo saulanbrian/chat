@@ -3,8 +3,9 @@ from . import views
 from . import consumers
 
 urlpatterns = [
-  path('',views.ConversationListView.as_view()),
-  path('<pk>/',views.ConversationDataView.as_view())
+    path('',views.ConversationListView.as_view()),
+    path('<pk>/',views.ConversationDataView.as_view()),
+    path('conversation/retrieveId/',views.get_conversation_id)
   ]
   
   
