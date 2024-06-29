@@ -7,7 +7,8 @@ import {
     Input,
     Menu,
     MenuList,
-    MenuItem
+    MenuItem,
+    Typography
 } from '@mui/material'
 
 import SearchIcon from "@mui/icons-material/Search"
@@ -15,6 +16,8 @@ import SearchResults from './searchresults'
 
 import React, { useEffect, useRef, useState } from 'react'
 import useSearchUsers from '../queries/users'
+
+import CircularProgress from '@mui/material/CircularProgress';
 
 const styles = {
     main:{
@@ -32,10 +35,10 @@ const styles = {
 export default function SearchBar({sx}){
 
     const [searchInput,setSearchInput] = useState('')
-    const [searchKey,setSearchKey] = useState(undefined)
+    const [searchKey,setSearchKey] = useState('')
 
 
-    const {data,isErrors,isLoading,refetch,enabled} = useSearchUsers(searchKey);
+    const {data,isErrors,isLoading,isSuccess,isPending} = useSearchUsers(searchKey);
     
     useEffect(() => {   
 
@@ -47,11 +50,6 @@ export default function SearchBar({sx}){
         return () => clearTimeout(timeoutId)
 
     },[searchInput])
-
-
-    useEffect(() => {
-        refetch()
-    },[searchKey])
 
 
     function handleChange(e){
@@ -73,8 +71,27 @@ export default function SearchBar({sx}){
         </IconButton>
       </ListItem>
       {
-        data && data.length >= 1 && 
-        <SearchResults sx={{position:'absolute', zIndex:'1',width:'70%',}} results={data} />
+        isSuccess &&  data?.length >= 1 &&
+        <SearchResults sx={{position:'absolute', zIndex:'1',width:'70%',}} results={data} /> 
+      }
+      {
+        isSuccess && data?.error && 
+        <Box sx={{position:'absolute', zIndex:'1',width:'70%',background:'white'}}>
+           <Typography PARAGRAPH={true} sx={{paddingLeft:5}}>{data.error}</Typography>
+        </Box>
+      }
+      {
+        isLoading && 
+        <Box sx={{
+            position:'absolute', 
+            zIndex:'1',
+            width:'70%',
+            background:'white',
+            display:'flex',
+            justifyContent:'center'
+            }}>
+            <CircularProgress size={30}/>
+        </Box>
       }
     </React.Fragment>
     )

@@ -3,6 +3,8 @@ import {
     ListItemText,
     ListItemIcon,
     ListItem,
+    ListItemAvatar,
+    Avatar,
     Typography,
     ListItemButton
 } from '@mui/material'
@@ -37,14 +39,18 @@ export default function SearchResults({results,sx}){
     return (
         <List sx={{
             backgroundColor:'white',
-            border:'1px solid rgb(250, 44, 131)',
+            border:'1px solid black',
+            display:searchResults? 'block':'none',
             borderTop:0,
             ...sx}}>
             {
                 searchResults && searchResults.map(res => {
-                  return <ListItem disablePadding={true}>
+                  return <ListItem disablePadding={true} key={res.username}>
                     <ListItemButton sx={{margin:0}} onClick={e => handleClick(res.id)}>
-                        <Typography key={res.username} paragraph={true} color='primary'>{res.username}</Typography>
+                        <ListItemAvatar>
+                            <Avatar src={res.profile} />
+                        </ListItemAvatar>
+                        <Typography key={res.username} paragraph={true} >{res.username}</Typography>
                     </ListItemButton>
                  </ListItem> 
                 })
