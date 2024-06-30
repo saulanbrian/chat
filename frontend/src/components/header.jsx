@@ -23,7 +23,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcCallIcon from '@mui/icons-material/AddIcCall';
 
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useUserContext } from '../context/usercontext.jsx'
 
 import './static/header.css'
@@ -67,18 +67,18 @@ export default function Header(){
       </Box>
       <Typography 
         component='a' 
-        href='#' 
+        href='/' 
         sx={{flexGrow:1}}>
-      CHATAPP
+        CHATAPP
       </Typography>
       <Box sx={{display:{xs:'none',md:'block'}}}>
-        <Button>about</Button>
+        <Button onClick={() => navigate('/about')}>about</Button>
       </Box>
       <Box sx={{display:{xs:'none',md:'block'}}}>
-        <Button>contact</Button>
+        <Button onClick={() => navigate('/contacts')}>contact</Button>
       </Box>
       <Box sx={{display:{xs:'none',md:'block'}}}>
-        <Button focusRipple>home</Button>
+        <Button focusRipple onClick={() => navigate('/')}>home</Button>
       </Box>
       <Box sx={{display:{xs:'none',md:'block'}}}>
       <Box onClick={openMenu}>
@@ -108,7 +108,7 @@ export default function Header(){
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding >
-            <ListItemButton>
+            <ListItemButton component={Link} to='/about'>
               <ListItemIcon>
                 <InfoIcon color='primary'/>
               </ListItemIcon>

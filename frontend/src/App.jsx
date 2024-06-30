@@ -12,6 +12,8 @@ import { UserContextProvider } from './context/usercontext.jsx'
 import Private from '../utils/privatewrapper.jsx'
 
 import { createTheme,ThemeProvider } from '@mui/material/styles';
+import About from './pages/about.jsx'
+import Contacts from './pages/contacts.jsx'
 
 
 
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
         element:<ConversationPage />,
       },
       ]
+    },
+    {
+      path:'about',
+      element:<About/>
+    },
+    {
+      path:'contacts',
+      element: <Contacts />
     },
     {
       path:'login',
