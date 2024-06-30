@@ -16,7 +16,7 @@ import SearchBar from "./searchbar.jsx"
 import SearchResults from "./searchresults.jsx"
 
 import { useLocation,useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGetConversations } from '../queries/conversations.jsx'
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -27,13 +27,16 @@ function ConversationDrawer({sx}){
   
   const queryClient = useQueryClient()
   
-  const conversationsData = useGetConversations()
+  const {data,isLoading} = useGetConversations()
   const [selectedConvo,setSelectedConvo] = useState(null)
   const navigate = useNavigate()
   
   const location = window.location
-  
-  conversationsData.data && console.log(conversationsData.data)
+
+
+  useEffect(() => {
+    console.log('updated')
+  },[data])
   
   const styles = {
     paper:{
@@ -52,11 +55,11 @@ function ConversationDrawer({sx}){
   
   return <Box sx={{...styles.paper,...sx}} id='conversation-container'>
   {
-    conversationsData.isLoading?<h1>loading...</h1>:
+    isLoading?<h1>loading...</h1>:
     <List>
       <SearchBar sx={{position:'relative'}}/>
     {
-      conversationsData.data.map(
+      data.map(
         convo => {
           const user = convo.conversation_with.username
           const profile = convo.conversation_with.profile

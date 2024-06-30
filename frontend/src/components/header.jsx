@@ -132,6 +132,9 @@ export default function Header(){
               <ListItemText primary='logout' color='danger'/>
             </ListItemButton>
           </ListItem>
+          <ListItem>
+            <Typography variant='subtitle2' color={'primary'}>© 2024 | briansaulan</Typography>
+          </ListItem>
         </List>
       </Drawer>
     </Toolbar>

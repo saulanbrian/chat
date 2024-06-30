@@ -77,7 +77,7 @@ export default function SearchBar({sx}){
       {
         isSuccess && data?.error && 
         <Box sx={{position:'absolute', zIndex:'1',width:'70%',background:'white'}}>
-           <Typography PARAGRAPH={true} sx={{paddingLeft:5}}>{data.error}</Typography>
+           <Typography paragraph={true} sx={{paddingLeft:5}}>{data.error}</Typography>
         </Box>
       }
       {

@@ -45,14 +45,16 @@ export default function SearchResults({results,sx}){
             ...sx}}>
             {
                 searchResults && searchResults.map(res => {
-                  return <ListItem disablePadding={true} key={res.username}>
+                  return (
+                  <ListItem disablePadding={true} key={res.username}>
                     <ListItemButton sx={{margin:0}} onClick={e => handleClick(res.id)}>
                         <ListItemAvatar>
                             <Avatar src={res.profile} />
                         </ListItemAvatar>
                         <Typography key={res.username} paragraph={true} >{res.username}</Typography>
                     </ListItemButton>
-                 </ListItem> 
+                  </ListItem> 
+                 )
                 })
             }
         </List>

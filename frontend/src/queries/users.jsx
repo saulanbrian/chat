@@ -7,8 +7,9 @@ export default function useSearchUsers(searchKey){
         queryKey:['searchResults',searchKey],
         queryFn:async() => {
             if (searchKey.trim() === '') return null
+
             const res = await api.get(`user/${searchKey}`)
-            if (res.data?.length > 1) return res.data  
+            if (res.data?.length >= 1) return res.data  
             else return {'error':'couldnt find a user with the given name'}         
         },
     })

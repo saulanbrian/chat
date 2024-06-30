@@ -22,6 +22,8 @@ import AutoScrollBox  from '../components/autoscrollbox.jsx'
 
 import { SentMessage, ReceivedMessage } from '../components/message.jsx'
 
+import { useGetConversations } from '../queries/conversations.jsx'
+
 const styles = {
   box:{
     flexGrow:1,
@@ -47,7 +49,8 @@ function ConversationPage(){
   const queryClient = useQueryClient()
   
   const { convoId } = useParams()
-  const { data,isLoading,isError } = useGetMessages(convoId)
+  const { data,isLoading:messageLoading,isError } = useGetMessages(convoId)
+  const {data:conversations,isLoading:conversationsLoading} = useGetConversations()
   
   const token = localStorage.getItem('ACCESS_TOKEN')
   const path = `ws://127.0.0.1:8000/ws/conversation/${convoId}/?token=${token}`
@@ -56,12 +59,15 @@ function ConversationPage(){
       
   const socket = useMemo(() => {
     return new WebSocket(path)
-  },[])
+  },[convoId])
 
-  const messageRef = useRef(undefined)
+  
+  let convoIndex;
+  if(conversations) convoIndex = parseInt(conversations.findIndex(convo => convo.id === convoId))
       
+  const messageRef = useRef(undefined)
+
   socket.onopen = () => {
-    console.log('connection established')
     setConnectedToSocket(true)
   }
 
@@ -75,6 +81,7 @@ function ConversationPage(){
       ...prev,  
       messages:[...prev.messages,data]
     }))
+    queryClient.invalidateQueries(['conversations'])
   }
   
   function handleClick(e){
@@ -94,7 +101,7 @@ function ConversationPage(){
 
   return (
     <AutoScrollBox sx={styles.box}>
-      {isLoading ? (
+      {conversationsLoading || messageLoading ? (
         <CircularProgress />
       ) : (
         data.messages.map((message) => (
