@@ -37,10 +37,20 @@ export default function About(){
                             this application is created to showcase my skill as a full stack web developer. - Brian Saulan
                         </Typography>
                     </ListItem>
-                    <ListItem disableGutters>
+                    <ListItem disableGutters divider>
                         <Typography variant="button">
                             Features
                         </Typography>
+                    </ListItem>
+                    <ListItem disableGutters>
+                      <Typography paragraph>
+                        while this app currently doesn't have so many features, It does  serve its purpose as a chat application, allowing users to communicate to each other easily.
+                      </Typography>
+                    </ListItem>
+                    <ListItem disableGutters>
+                      <Typography paragraph>
+                        to make use of the app, simply go to the home page and search for a user (if you haven't ever talked to that user using this app) otherwise, just click your conversation with that user. that's it. you can now talk to each other
+                      </Typography>
                     </ListItem>
                 </List>
             </Box>

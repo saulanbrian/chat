@@ -77,10 +77,16 @@ function ConversationPage(){
       
   socket.onmessage = (e) => {
     const data = JSON.parse(e.data)
-    queryClient.setQueryData(['messages',convoId],(prev) => ({
-      ...prev,  
-      messages:[...prev.messages,data]
-    }))
+    queryClient.setQueryData(['messages',convoId],(prev) => {
+      const messageExists = prev.messages.some((msg) => {
+        return msg.id === data.id
+      })
+      if (messageExists) return prev
+      else return {
+        ...prev,  
+        messages:[...prev.messages,data]
+        }
+    })
     queryClient.invalidateQueries(['conversations'])
   }
   
