@@ -16,6 +16,9 @@ import {
   Divider,
   Avatar
 } from '@mui/material'
+import CustomDrawer from '../components/customdrawer.jsx'
+
+import { styled } from '@mui/material/styles'
 
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
@@ -31,7 +34,27 @@ import './static/header.css'
 import { useState } from 'react'
 
 
-export default function Header(){
+const StyledBox = styled(Box)(({theme}) => ({
+  [theme.breakpoints.down('md')]:{
+    display:'none'
+  },
+  [theme.breakpoints.up('md')]:{
+    display:'block'
+  }
+}))
+
+
+const NavigationButton = ({to,label}) => {
+  const navigate = useNavigate()
+  return (
+  <StyledBox component={Button} onClick={() => navigate(to)}>
+    { label }
+  </StyledBox>
+  )
+}
+
+
+export default function Header(display){
   const [anchorEl,setAnchorEl] = useState(null)
   const menuState = Boolean(anchorEl)
   
@@ -57,37 +80,23 @@ export default function Header(){
     setAnchorEl(e.target)
   }
   
+  
   return (
-  <AppBar color='primary' sx={{position:'sticky',padding:'0 10px'}} id='header'>
+  <AppBar color='primary' sx={{position:'sticky',padding:'0 10px',}} id='header'>
     <Toolbar disableGutters>
       <Box sx={{display:{sm:'block',md:'none'}}}>
         <IconButton onClick={openDrawer}>
           <MenuIcon/>
         </IconButton>
       </Box>
-      <Typography 
-        component='a' 
-        href='/' 
-        sx={{flexGrow:1}}>
-        CHATAPP
-      </Typography>
-      <Box sx={{display:{xs:'none',md:'block'}}}>
-        <Button onClick={() => navigate('/about')}>about</Button>
-      </Box>
-      <Box sx={{display:{xs:'none',md:'block'}}}>
-        <Button onClick={() => navigate('/contacts')}>contact</Button>
-      </Box>
-      <Box sx={{display:{xs:'none',md:'block'}}}>
-        <Button focusRipple onClick={() => navigate('/')}>home</Button>
-      </Box>
-      <Box sx={{display:{xs:'none',md:'block'}}}>
-      <Box onClick={openMenu}>
-          <Avatar srcSet={`http://127.0.0.1:8000${user.profile}`} sx={{width:30,height:30}}/>
-      </Box>
-      </Box>
-      <Menu open={menuState} 
-            anchorEl={anchorEl} 
-            onClose={closeMenu}>
+      <Typography sx={{flexGrow:1}}>CHATAPP</Typography>
+      <NavigationButton to='/' label='home' />
+      <NavigationButton to='/about' label='about' />
+      <NavigationButton to='/contacts' label='contacts' />
+      <StyledBox onClick={openMenu}>
+        <Avatar srcSet={`http://127.0.0.1:8000${user.profile}`}       sx={{width:30,height:30}}/>
+      </StyledBox>
+      <Menu open={menuState} anchorEl={anchorEl} onClose={closeMenu}>
         <MenuItem component={Button} 
                   startIcon={<LogoutIcon/>}
                   onClick={() => navigate('logout')} >
@@ -95,48 +104,9 @@ export default function Header(){
         </MenuItem>
       </Menu>
       
-      <Drawer open={drawerOpen} 
+      <CustomDrawer open={drawerOpen} 
               anchor='left' 
-              onClose={toggleDrawer}>
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton onClick={() => navigate('/')}>
-              <ListItemIcon>
-                <HomeIcon color='primary'/>
-              </ListItemIcon>
-              <ListItemText primary='home'/>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding >
-            <ListItemButton component={Link} to='/about'>
-              <ListItemIcon>
-                <InfoIcon color='primary'/>
-              </ListItemIcon>
-              <ListItemText primary='about'/>
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding >
-            <ListItemButton>
-              <ListItemIcon>
-                <AddIcCallIcon color='primary'/>
-              </ListItemIcon>
-              <ListItemText primary='contacts'/>
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <ListItem disablePadding>
-            <ListItemButton onClick={() => navigate('logout')}>
-              <ListItemIcon>
-                <LogoutIcon color='error' />
-              </ListItemIcon>
-              <ListItemText primary='logout' color='danger'/>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <Typography variant='subtitle2' color={'primary'}>© 2024 | briansaulan</Typography>
-          </ListItem>
-        </List>
-      </Drawer>
+              onClose={toggleDrawer} />
     </Toolbar>
   </AppBar>
   )

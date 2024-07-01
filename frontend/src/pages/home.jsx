@@ -21,7 +21,7 @@ function Home(){
   const location = useLocation()
   
   return <> 
-  <Header />
+  <Header/>
     <Box sx={styles.box}>
     {
       location.pathname === '/'?
