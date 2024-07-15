@@ -1,0 +1,8 @@
+version: 0.1
+
+endpoints:
+  - name:"ChatApp"
+    port:8000
+    type:REST
+    context:/
+    networkVisibility:Public
