@@ -31,7 +31,10 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["chatapp-backend-2308158041-choreo-internal.dp-development-chat-46562-3075123834"]
+ALLOWED_HOSTS = [
+  "chatapp-backend-2308158041-choreo-internal.dp-development-chat-46562-3075123834",
+  "https://6f898e82-b2cf-4760-9066-90beeee04b49.e1-us-east-azure.choreoapps.dev"
+  ]
 
 
 # Application definition
@@ -163,8 +166,8 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-  "http://127.0.0.1:8000",
-  "http://localhost:5173"
+  "chatapp-backend-2308158041-choreo-internal.dp-development-chat-46562-3075123834",
+  "https://6f898e82-b2cf-4760-9066-90beeee04b49.e1-us-east-azure.choreoapps.dev"
 ]
 
 MEDIA_URL = '/media/'
