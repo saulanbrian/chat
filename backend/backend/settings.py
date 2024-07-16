@@ -31,12 +31,6 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-  "chatapp-backend-2308158041-choreo-internal.dp-development-chat-46562-3075123834",
-  "6f898e82-b2cf-4760-9066-90beeee04b49.e1-us-east-azure.choreoapps.dev",
-  "127.0.0.1"
-  ]
-
 
 # Application definition
 
@@ -166,12 +160,6 @@ SIMPLE_JWT = {
   "BLACKLIST_AFTER_ROTATION": True,
 }
 
-CORS_ALLOWED_ORIGINS = [
-  "http://localhost:5173",
-  "https://127.0.0.1"
-  "https://6f898e82-b2cf-4760-9066-90beeee04b49.e1-us-east-azure.choreoapps.dev",
-  "https://chatapp-backend-2308158041-choreo-internal.dp-development-chat-46562-3075123834"
-]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -196,3 +184,7 @@ CHANNEL_LAYERS = {
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+ALLOWED_HOSTS = ['*']
