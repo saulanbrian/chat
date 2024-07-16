@@ -166,7 +166,7 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-  "chatapp-backend-2308158041-choreo-internal.dp-development-chat-46562-3075123834",
+  "http://localhost:5173"
   "https://6f898e82-b2cf-4760-9066-90beeee04b49.e1-us-east-azure.choreoapps.dev"
 ]
 
