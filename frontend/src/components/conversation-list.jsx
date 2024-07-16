@@ -48,6 +48,8 @@ function ConversationDrawer({sx}){
     }
   }  
   
+  const backendUrl = import.meta.env.VITE_API_URL
+  
   function handleSelect(e,convoId){
     setSelectedConvo(convoId)
     navigate(convoId)
@@ -73,7 +75,7 @@ function ConversationDrawer({sx}){
             <ListItemButton selected={selectedConvo === convo.id} 
                             onClick={e => handleSelect(e,convo.id)}>
               <ListItemAvatar>
-                <Avatar src={`http://127.0.0.1:8000${profile}`} />
+                <Avatar src={`${backendUrl}/${profile}`} />
               </ListItemAvatar>
               <ListItemText primary={user} 
                             secondary={message} />

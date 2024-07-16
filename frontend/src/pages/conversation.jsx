@@ -44,6 +44,8 @@ const styles = {
   }
 }
 
+const backendUrl = import.meta.env.VITE_API_URL
+
 function ConversationPage(){
   
   const queryClient = useQueryClient()
@@ -53,7 +55,7 @@ function ConversationPage(){
   const {data:conversations,isLoading:conversationsLoading} = useGetConversations()
   
   const token = localStorage.getItem('ACCESS_TOKEN')
-  const path = `ws://127.0.0.1:8000/ws/conversation/${convoId}/?token=${token}`
+  const path = `ws://${backendUrl}/ws/conversation/${convoId}/?token=${token}`
 
   const [connectedToSocket,setConnectedToSocket] = useState(false)
       

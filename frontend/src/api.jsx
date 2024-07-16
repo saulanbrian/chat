@@ -1,14 +1,18 @@
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 
+const backendUrl = import.meta.env.VITE_API_URL
+
+console.log(backendUrl)
+
 const api = axios.create({
-  baseURL:import.meta.env.VITE_API_URL
+  baseURL:backendUrl
 })
 
 const refreshToken = async(token) => {
   
   try{
-    const res = await axios.post('http://127.0.0.1:8000/auth/token/refresh/',{refresh:token})
+    const res = await axios.post(`${backendUrl}/auth/token/refresh/`,{refresh:token})
     localStorage.setItem('ACCESS_TOKEN',res.data.access)
     return res.data.access
   }catch(e){
