@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 
-const backendUrl = import.meta.env.VITE_API_URL || "choreo-apis/chatapp/backend/v1"
+const backendUrl = import.meta.env.VITE_API_URL
 
 console.log(backendUrl)
 

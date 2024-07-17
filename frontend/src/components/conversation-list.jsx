@@ -61,7 +61,7 @@ function ConversationDrawer({sx}){
     <List>
       <SearchBar sx={{position:'relative'}}/>
     {
-      data.map(
+      data && data.map(
         convo => {
           const user = convo.conversation_with.username
           const profile = convo.conversation_with.profile
