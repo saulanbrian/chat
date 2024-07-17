@@ -55,7 +55,7 @@ function ConversationPage(){
   const {data:conversations,isLoading:conversationsLoading} = useGetConversations()
   
   const token = localStorage.getItem('ACCESS_TOKEN')
-  const path = `ws://${backendUrl}/ws/conversation/${convoId}/?token=${token}`
+  const path = `wss://${backendUrl}/ws/conversation/${convoId}/?token=${token}`
 
   const [connectedToSocket,setConnectedToSocket] = useState(false)
       
