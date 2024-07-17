@@ -21,7 +21,6 @@ def get_conversation(conversation_id):
 class ConversationConsumer(AsyncWebsocketConsumer):
   
   async def connect(self):
-    print('connecting to webscoket')
     user = self.scope['user']
     self.user = user
     
