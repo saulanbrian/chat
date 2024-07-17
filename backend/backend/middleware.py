@@ -10,6 +10,7 @@ from user.models import CustomUser
 
 class JwtAuthMiddleware(BaseMiddleware):
   async def __call__(self,scope,receive,send):
+    print('jwt middleware runnng')
     query_string = scope['query_string'].decode()
     query_params = parse_qs(query_string)
     token = query_params.get('token',None)
