@@ -55,12 +55,12 @@ function ConversationPage(){
   const {data:conversations,isLoading:conversationsLoading} = useGetConversations()
   
   const token = localStorage.getItem('ACCESS_TOKEN')
-  const path = `wss://${window.location.hostname}${backendUrl}ws/conversation/${convoId}/?token=${token}`
+  const path = `${backendUrl}ws/conversation/${convoId}/?token=${token}`
 
   const [connectedToSocket,setConnectedToSocket] = useState(false)
       
   const socket = useMemo(() => {
-    return new WebSocket(path)
+    return new WebSocket(path.replace('http','ws'))
   },[convoId])
 
   
