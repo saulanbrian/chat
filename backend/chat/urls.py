@@ -5,7 +5,6 @@ from . import consumers
 
 urlpatterns = [
   path('', views.ChatListCreateView.as_view()),
-  path('chat',views.room)
   ]
   
 websocket_urlpatterns = [

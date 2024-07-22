@@ -1,2 +1,1 @@
-web: daphne -u /tmp/daphne.sock backend.asgi:application
-worker: python manage.py runworker
+web: python manage.py runserver 0.0.0.0:8000

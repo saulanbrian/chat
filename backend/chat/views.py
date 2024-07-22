@@ -24,5 +24,4 @@ class ChatListCreateView(ListCreateAPIView):
     return context
   
 
-def room(request):
-  return render(request,'chat/index.html')
+  
